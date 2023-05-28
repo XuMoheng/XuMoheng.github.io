@@ -103,7 +103,7 @@ theme: fluid
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
   type: git
-  repo: https://github.com/XuMoheng/XuMoheng.github.io
+  repo: https://github.com/XuMoheng/XuMoheng.github.io.git
   branch: main
 
 #公式渲染katex
