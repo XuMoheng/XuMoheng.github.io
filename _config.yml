@@ -108,6 +108,6 @@ deploy:
   branch: master
 
 #公式渲染katex
-# markdown:
-#   plugins:
-#     - "hexo-renderer-pandoc"
+markdown:
+  plugins:
+    - "@traptitech/markdown-it-katex"
