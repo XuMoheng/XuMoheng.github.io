@@ -106,7 +106,7 @@ language: zh-CN
 deploy:
   type: git
   repo: https://github.com/XuMoheng/XuMoheng.github.io.git
-  branch: main
+  branch: master
 
 #公式渲染katex
 # markdown:
