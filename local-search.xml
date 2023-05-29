@@ -8,9 +8,21 @@
     <link href="/2023/05/29/firstPage/"/>
     <url>/2023/05/29/firstPage/</url>
     
-    <content type="html"><![CDATA[<p>公式测试： <span class="math inline">\(E=mc^2\)</span></p>]]></content>
+    <content type="html"><![CDATA[<h3 id="行内公式测试-emc2">行内公式测试： <spanclass="math inline">\(E=mc^2\)</span></h3><h3 id="行间公式测试">行间公式测试:</h3><p><span class="math display">\[\sum_\limits{i=1}^{n}i=\frac{n(n+1)}{2}\]</span></p><h3 id="代码测试">代码测试：</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs C++"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;cstdio&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;iosteam&gt;</span></span><br>usign <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>&#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure><h3 id="表格测试">表格测试：</h3><table><thead><tr class="header"><th>序号</th><th>日期</th><th>文章标题</th></tr></thead><tbody><tr class="odd"><td></td><td></td><td></td></tr></tbody></table><h3 id="分割线测试">分割线测试：</h3><hr /><h3 id="颜色测试绿色">颜色测试：<font color=red>绿色</font></h3><h3 id="emoji测试-joy">emoji测试 :joy:</h3><h3 id="链接测试如何在markdown使用emoji">链接测试：<ahref="https://gist.github.com/rxaviers/7360908"title="emoji">如何在markdown使用emoji</a></h3><p><a href="https://github-emoji-picker.rickstaa.dev/"title="点击就复制到剪切板">emoji工具</a> :grinning:</p><h3 id="图片测试">图片测试：</h3><img src="/2023/05/29/firstPage/yourName.jpg" class="" title="yourName">]]></content>
     
     
+    <categories>
+      
+      <category>你好啊</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>开始的开始</tag>
+      
+    </tags>
     
   </entry>
   
