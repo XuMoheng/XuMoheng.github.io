@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>数据结构2 PTA的一点点知识点（少）</title>
+    <link href="/2023/05/30/dataStructure2PTA/"/>
+    <url>/2023/05/30/dataStructure2PTA/</url>
+    
+    <content type="html"><![CDATA[<h1>2</h1><ul><li><p>2-13 G1是G的生成树，则G1不是G的连通分量，G1是G的极小连通子图</p></li><li><p>2-14 一个有向图有n个顶点，则每个顶点的度可能的最大值是 $ 2(n-1) $，此处不考虑重边和自环。</p></li></ul><h1>4</h1><ul><li><p>1-6 若一个有向图的邻接矩阵对角线以下元素均为零，则该图的拓扑有序序列必定存在。</p><p>这是对的，因为上三角矩阵意味着只有编号小的点指向编号大的点，则一定不存在回路。</p><p>任何一个无环的有向图一定有拓扑序列，有环的有向图则没有拓扑序列。</p></li></ul><h1>5</h1><p>2-2 选c，因为弧（P210）的定义为：箭头的起始端为弧尾，结束端为弧头。</p><h1>6</h1><ul><li>1-8 当向二叉搜索树中插入一个结点，则该结点一定成为叶子结点。</li></ul><p>这是 对  的。注意是二叉搜索树，只插入到相匹配的叶子上。</p><ul><li>1-10 对大小均为n的有序表和无序表分别进行顺序查找，在等概率查找的情况下，对于查找成功，它们的平均查找长度是相同的，而对于查找失败，它们的平均查找长度是不同的。</li></ul><p>这是 对 的。查找失败指的是表中没有这个元素，而有序表因为有序，对p，当有a&lt;p&lt;b时即可停止。无序表就要查完整个表才行。</p><ul><li><p>2-6 对22个记录的有序表作折半查找，当查找失败时，至少需要比较（ ）次关键字。</p><p>填4 。至少4次，至多5次。不是满二叉树。</p></li><li><p>2-17 在长度为32的有序表中进行二分查找时，所需进行的关键字比较次数最多为( )</p></li></ul><p>答案是6. 注意二叉树的节点数，31的高度为5，32就是6了。</p><p>$2^k-1=n$ ,k为高度。</p><h1>chapter7 图</h1><ul><li><p>1-8 <strong>十字链表</strong>是<strong>有向图</strong>的一种存储结构</p><p>​       <strong>邻接多重表</strong>是<strong>无向图</strong>的一种存储结构</p></li><li><p>1-33 <strong>连通分量</strong>是<strong>无向图</strong>中的极大连通子图。</p><p>​        <strong>强连通分量</strong>是<strong>有向图</strong>中的极大连通子图。</p><p>​         <strong>连通图</strong>和<strong>连通分量</strong>都是<strong>无向图</strong>的概念。</p><p>​          <strong>强连通图</strong>和<strong>强连通分量</strong>都是<strong>有向图</strong>的概念</p></li><li><blockquote><p>2-6例题：G是一个非连通无向图，共有28条边，则该图至少有（）个顶点。</p></blockquote><p>考虑到<strong>非连通图</strong>，应该最终答案加1，故答案为9</p></li></ul>]]></content>
+    
+    
+    <categories>
+      
+      <category>课</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>数据机构, 复习</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>first page</title>
     <link href="/2023/05/29/firstPage/"/>
     <url>/2023/05/29/firstPage/</url>
