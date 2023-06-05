@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>newPage</title>
+    <link href="/2023/06/05/newPage/"/>
+    <url>/2023/06/05/newPage/</url>
+    
+    <content type="html"><![CDATA[<p>12345</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>你好啊</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>开始的开始</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>数据结构2 PTA的一点点知识点（少）</title>
     <link href="/2023/05/30/dataStructure2PTA/"/>
     <url>/2023/05/30/dataStructure2PTA/</url>
