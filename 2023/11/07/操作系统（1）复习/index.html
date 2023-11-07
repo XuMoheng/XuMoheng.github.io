@@ -1,0 +1,1123 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="https://blog-static.cnblogs.com/files/blogs/780196/bidiu.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="微分方程">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="第一章 35:39 1.1.1 操作系统的目标 4个目标：方便性和有效性是设计OS时最重要的两个目标。   方便性  无OS时需要编写机器码，而OS可以让用户使用高级语言。    有效性   第一层含义：提高系统资源的利用率   第二层含义：提高系统的吞吐量     可扩充性  可扩充性的好坏与OS的结构有紧密的联系：无结构 &#x3D;&gt; 模块化 &#x3D;&gt; 层次化 &#x3D;&gt; 微内核    开放性">
+<meta property="og:type" content="article">
+<meta property="og:title" content="操作系统（1）复习">
+<meta property="og:url" content="http://example.com/2023/11/07/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%EF%BC%881%EF%BC%89%E5%A4%8D%E4%B9%A0/index.html">
+<meta property="og:site_name" content="微分方程">
+<meta property="og:description" content="第一章 35:39 1.1.1 操作系统的目标 4个目标：方便性和有效性是设计OS时最重要的两个目标。   方便性  无OS时需要编写机器码，而OS可以让用户使用高级语言。    有效性   第一层含义：提高系统资源的利用率   第二层含义：提高系统的吞吐量     可扩充性  可扩充性的好坏与OS的结构有紧密的联系：无结构 &#x3D;&gt; 模块化 &#x3D;&gt; 层次化 &#x3D;&gt; 微内核    开放性">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2023/11/07/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%EF%BC%881%EF%BC%89%E5%A4%8D%E4%B9%A0/image-20231105192718669.png">
+<meta property="og:image" content="http://example.com/2023/11/07/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%EF%BC%881%EF%BC%89%E5%A4%8D%E4%B9%A0/image-20231105192802898.png">
+<meta property="og:image" content="http://example.com/2023/11/07/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%EF%BC%881%EF%BC%89%E5%A4%8D%E4%B9%A0/image-20231105193859456.png">
+<meta property="og:image" content="http://example.com/2023/11/07/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%EF%BC%881%EF%BC%89%E5%A4%8D%E4%B9%A0/image-20231105194122229.png">
+<meta property="og:image" content="http://example.com/2023/11/07/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%EF%BC%881%EF%BC%89%E5%A4%8D%E4%B9%A0/image-20231105194213951.png">
+<meta property="og:image" content="http://example.com/2023/11/07/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%EF%BC%881%EF%BC%89%E5%A4%8D%E4%B9%A0/image-20231105194923883.png">
+<meta property="og:image" content="http://example.com/2023/11/07/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%EF%BC%881%EF%BC%89%E5%A4%8D%E4%B9%A0/image-20231105194937063.png">
+<meta property="og:image" content="http://example.com/2023/11/07/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%EF%BC%881%EF%BC%89%E5%A4%8D%E4%B9%A0/image-20231105195258223.png">
+<meta property="og:image" content="http://example.com/2023/11/07/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%EF%BC%881%EF%BC%89%E5%A4%8D%E4%B9%A0/image-20231106150702381.png">
+<meta property="og:image" content="http://example.com/2023/11/07/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%EF%BC%881%EF%BC%89%E5%A4%8D%E4%B9%A0/image-20231106183856487.png">
+<meta property="og:image" content="http://example.com/2023/11/07/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%EF%BC%881%EF%BC%89%E5%A4%8D%E4%B9%A0/image-20231106185151385.png">
+<meta property="og:image" content="http://example.com/2023/11/07/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%EF%BC%881%EF%BC%89%E5%A4%8D%E4%B9%A0/image-20231106185159371.png">
+<meta property="og:image" content="http://example.com/2023/11/07/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%EF%BC%881%EF%BC%89%E5%A4%8D%E4%B9%A0/image-20231106192404344.png">
+<meta property="og:image" content="http://example.com/2023/11/07/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%EF%BC%881%EF%BC%89%E5%A4%8D%E4%B9%A0/image-20231106193451123.png">
+<meta property="og:image" content="http://example.com/2023/11/07/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%EF%BC%881%EF%BC%89%E5%A4%8D%E4%B9%A0/image-20231106194830840.png">
+<meta property="og:image" content="http://example.com/2023/11/07/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%EF%BC%881%EF%BC%89%E5%A4%8D%E4%B9%A0/image-20231106194923746.png">
+<meta property="og:image" content="http://example.com/2023/11/07/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%EF%BC%881%EF%BC%89%E5%A4%8D%E4%B9%A0/image-20231106195457474.png">
+<meta property="og:image" content="http://example.com/2023/11/07/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%EF%BC%881%EF%BC%89%E5%A4%8D%E4%B9%A0/image-20231106195436959.png">
+<meta property="og:image" content="http://example.com/2023/11/07/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%EF%BC%881%EF%BC%89%E5%A4%8D%E4%B9%A0/image-20231106200834120.png">
+<meta property="og:image" content="http://example.com/2023/11/07/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%EF%BC%881%EF%BC%89%E5%A4%8D%E4%B9%A0/image-20231106201022269.png">
+<meta property="og:image" content="http://example.com/2023/11/07/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%EF%BC%881%EF%BC%89%E5%A4%8D%E4%B9%A0/image-20231106201034405.png">
+<meta property="og:image" content="http://example.com/2023/11/07/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%EF%BC%881%EF%BC%89%E5%A4%8D%E4%B9%A0/image-20231106201044489.png">
+<meta property="og:image" content="http://example.com/2023/11/07/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%EF%BC%881%EF%BC%89%E5%A4%8D%E4%B9%A0/image-20231106202152853.png">
+<meta property="og:image" content="http://example.com/2023/11/07/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%EF%BC%881%EF%BC%89%E5%A4%8D%E4%B9%A0/image-20231106203111715.png">
+<meta property="og:image" content="http://example.com/2023/11/07/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%EF%BC%881%EF%BC%89%E5%A4%8D%E4%B9%A0/image-20231106203121733.png">
+<meta property="og:image" content="http://example.com/2023/11/07/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%EF%BC%881%EF%BC%89%E5%A4%8D%E4%B9%A0/image-20231106203131567.png">
+<meta property="og:image" content="http://example.com/2023/11/07/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%EF%BC%881%EF%BC%89%E5%A4%8D%E4%B9%A0/image-20231106203334832.png">
+<meta property="og:image" content="http://example.com/2023/11/07/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%EF%BC%881%EF%BC%89%E5%A4%8D%E4%B9%A0/image-20231106203347720.png">
+<meta property="article:published_time" content="2023-11-06T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-11-07T07:25:14.684Z">
+<meta property="article:author" content="微分方程">
+<meta property="article:tag" content="考试周复习">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/2023/11/07/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%EF%BC%881%EF%BC%89%E5%A4%8D%E4%B9%A0/image-20231105192718669.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>操作系统（1）复习 - 微分方程</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":2},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>微分方程</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="操作系统（1）复习"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        微分方程
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-11-07 00:00" pubdate>
+          2023年11月7日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.2k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          27 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">操作系统（1）复习</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2023年11月7日 下午
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h1>第一章</h1>
+<p><code>35:39</code></p>
+<h3 id="1-1-1-操作系统的目标">1.1.1 操作系统的目标</h3>
+<p>4个目标：<strong>方便性</strong>和<strong>有效性</strong>是设计OS时<strong>最重要</strong>的两个目标。</p>
+<ol>
+<li>
+<p><strong>方便性</strong></p>
+<ul>
+<li>无OS时需要编写机器码，而OS可以让用户使用高级语言。</li>
+</ul>
+</li>
+<li>
+<p><strong>有效性</strong></p>
+<ul>
+<li>
+<p>第一层含义：提高系统资源的利用率</p>
+</li>
+<li>
+<p>第二层含义：提高系统的吞吐量</p>
+</li>
+</ul>
+</li>
+<li>
+<p>可扩充性</p>
+<ul>
+<li>可扩充性的好坏与OS的结构有紧密的联系：无结构 =&gt; 模块化 =&gt; 层次化 =&gt; 微内核</li>
+</ul>
+</li>
+<li>
+<p>开放性</p>
+</li>
+</ol>
+<h3 id="1-1-2-操作系统的作用">1.1.2 操作系统的作用</h3>
+<ol>
+<li>OS作为用户和计算机硬件系统之间的接口
+<ul>
+<li>用户可以用三种方式使用系统：
+<ul>
+<li>命令</li>
+<li>系统调用</li>
+<li>图标——窗口</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>OS作为系统资源的管理者
+<ul>
+<li>系统资源有4种：处理机、存储器、I/O设备、文件（数据和程序）</li>
+<li>OS的主要功能也是对这4类资源进行有效的管理：
+<ul>
+<li>处理机管理：用于分配和控制处理机</li>
+<li>存储器管理：主要负责内存的分配与回收</li>
+<li>I/O设备管理：负责I/O设备的分配（回收）与操纵</li>
+<li>文件管理：实现对文件的存取、共享和保护。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>OS实现了对计算机资源的抽象
+<ul>
+<li>扩充机器 或 虚机器：它向用户提供了一个对硬件操作的抽象模型。用户无需了解物理接口实现的细节。（第一个层次的抽象）</li>
+<li>又可在第一层软件（I/O管理软件）上再覆盖一层用于文件管理的软件，由它实现对文件操作的细节，并向上层提供一组对文件进行存取操作的数据结构及命令。（第二个层次的抽象）</li>
+<li>随着抽象层次的提高，抽象接口所提供的功能就越强，用户使用起来也越方便。</li>
+</ul>
+</li>
+</ol>
+<img src="/2023/11/07/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%EF%BC%881%EF%BC%89%E5%A4%8D%E4%B9%A0/image-20231105192718669.png" srcset="/img/loading.gif" lazyload class="" title="image-20231105192718669">
+<img src="/2023/11/07/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%EF%BC%881%EF%BC%89%E5%A4%8D%E4%B9%A0/image-20231105192802898.png" srcset="/img/loading.gif" lazyload class="" title="image-20231105192802898">
+<h3 id="1-2-单道和多道">1.2 单道和多道</h3>
+<h3 id="1-2-2-单道批处理系统">1.2.2 单道批处理系统</h3>
+<p>为了提高计算机利用率，应尽量保持系统的连续运行（脱机输入/输出Off-Line I/O方式）：</p>
+<ul>
+<li>减少CPU空闲时间</li>
+<li>提高I/O速度</li>
+</ul>
+<p>单道批处理系统特点：</p>
+<ul>
+<li>一次一个作业</li>
+<li>顺序执行</li>
+<li>不存在作业和进程的切换</li>
+<li>系统配上<strong>监督程序</strong>（monitor）控制作业的连续处理</li>
+</ul>
+<img src="/2023/11/07/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%EF%BC%881%EF%BC%89%E5%A4%8D%E4%B9%A0/image-20231105193859456.png" srcset="/img/loading.gif" lazyload class="" title="image-20231105193859456">
+<p><strong>主要缺点</strong>：系统资源得不到充分利用</p>
+<img src="/2023/11/07/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%EF%BC%881%EF%BC%89%E5%A4%8D%E4%B9%A0/image-20231105194122229.png" srcset="/img/loading.gif" lazyload class="" title="image-20231105194122229">
+<img src="/2023/11/07/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%EF%BC%881%EF%BC%89%E5%A4%8D%E4%B9%A0/image-20231105194213951.png" srcset="/img/loading.gif" lazyload class="" title="image-20231105194213951">
+<h3 id="1-2-3-多道批处理系统">1.2.3 多道批处理系统</h3>
+<ul>
+<li>没有交互</li>
+<li>有作业调度问题</li>
+<li>目的是：进一步提高资源的利用率和系统吞吐量</li>
+<li>后备队列：用户提交的作业先存放在外存上，并排成一个队列。</li>
+<li>共享CPU和系统中的各种资源</li>
+</ul>
+<img src="/2023/11/07/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%EF%BC%881%EF%BC%89%E5%A4%8D%E4%B9%A0/image-20231105194923883.png" srcset="/img/loading.gif" lazyload class="" title="image-20231105194923883">
+<img src="/2023/11/07/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%EF%BC%881%EF%BC%89%E5%A4%8D%E4%B9%A0/image-20231105194937063.png" srcset="/img/loading.gif" lazyload class="" title="image-20231105194937063">
+<img src="/2023/11/07/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%EF%BC%881%EF%BC%89%E5%A4%8D%E4%B9%A0/image-20231105195258223.png" srcset="/img/loading.gif" lazyload class="" title="image-20231105195258223">
+<h3 id="1-2-6操作系统的发展">1.2.6操作系统的发展</h3>
+<p>unix和linux是多用户多任务操作系统。</p>
+<p>unix不是微内核。</p>
+<p>linux是unix的一个重要变种，最初由芬兰学生Linus Torvalds针对Intel80386开发。</p>
+<h3 id="1-5-4-微内核">1.5.4 微内核</h3>
+<p>结构，3个基本功能，优点</p>
+<p>基于客户/服务器模式的微内核结构，将操作系统划分为两大部分：微内核和多个服务器。</p>
+<p><strong>微内核结构：</strong></p>
+<ol>
+<li>足够小的内核
+<ul>
+<li>在微内核操作系统中，内核是指：精心设计的、能实现现代OS最基本核心功能的小型内核</li>
+<li>微内核并非一个完整的OS，而只是将操作系统中最基本的部分放入微内核 =&gt; 所以微内核很小：
+<ul>
+<li>①与硬件紧密相关的部分</li>
+<li>②一些较基本的功能</li>
+<li>③客户和服务器之间的通信</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>基于客户/服务器模式</li>
+<li>应用“机制与策略分离”原理
+<ul>
+<li>机制：实现某一功能的具体执行结构</li>
+<li>策略：在机制的基础上借助于某些参数和算法来实现该功能的优化，或达到不同的功能目标</li>
+<li>传统OS：机制位于OS的内核的较低层，策略位于OS的内核的较高层</li>
+<li>微内核：通常将机制放在OS的微内核中 =&gt; 所以微内核很小</li>
+</ul>
+</li>
+<li>采用面向对象技术</li>
+</ol>
+<img src="/2023/11/07/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%EF%BC%881%EF%BC%89%E5%A4%8D%E4%B9%A0/image-20231106150702381.png" srcset="/img/loading.gif" lazyload class="" title="image-20231106150702381">
+<p><strong>微内核的基本功能</strong>：</p>
+<ol>
+<li>进程（线程）管理</li>
+<li>低级存储器管理</li>
+<li>中断和陷入处理</li>
+</ol>
+<img src="/2023/11/07/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%EF%BC%881%EF%BC%89%E5%A4%8D%E4%B9%A0/image-20231106183856487.png" srcset="/img/loading.gif" lazyload class="" title="image-20231106183856487">
+<p><strong>微内核操作系统的优点</strong>：</p>
+<ol>
+<li>提高了系统的可扩展性
+<ul>
+<li>微内核OS的许多功能是由相对独立的服务器软件来实现的</li>
+</ul>
+</li>
+<li>增强了可靠性
+<ul>
+<li>一方面是由于微内核是通过精心设计和严格测试的</li>
+<li>另一方面，它提供了规范而精简的应用程序接口（API）</li>
+<li>此外，所有服务器都是运行在<strong>用户态</strong>，服务器于服务器之间采用的是<strong>消息传递通信机制</strong>，当某个服务器出现错误时，不会影响内核和其他服务器</li>
+</ul>
+</li>
+<li>可移植性强
+<ul>
+<li>所有于特定CPU和I/O设备硬件有关的代码，均放在内核和内核下面的硬件隐藏层中，而操作系统其他绝大部分——各种服务器，均于硬件平台无关。</li>
+</ul>
+</li>
+<li>提供了对分布式系统的支持
+<ul>
+<li>客户和服务器之间、服务器和服务器之间的通信采用<strong>消息传递机制</strong>，只要在分布式系统中赋予所有进程和服务器唯一的标识符，再配置一张系统映射表，就可以实现分布式系统。</li>
+</ul>
+</li>
+<li>融合了面向对象技术</li>
+</ol>
+<p><strong>微内核操作系统存在的问题</strong>：</p>
+<ul>
+<li>最主要的问题是，较之早期的操作系统，微内核操作系统的运行效率有所降低。</li>
+</ul>
+<img src="/2023/11/07/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%EF%BC%881%EF%BC%89%E5%A4%8D%E4%B9%A0/image-20231106185151385.png" srcset="/img/loading.gif" lazyload class="" title="image-20231106185151385">
+<img src="/2023/11/07/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%EF%BC%881%EF%BC%89%E5%A4%8D%E4%B9%A0/image-20231106185159371.png" srcset="/img/loading.gif" lazyload class="" title="image-20231106185159371">
+<h1>第二章 进程的描述与控制</h1>
+<p>第十周第一节课<code>41:40</code></p>
+<p>修正：前驱图不用管<code>41:12</code></p>
+<h3 id="2-2-进程">2.2 进程</h3>
+<h3 id="2-2-1-进程的定义和特征">2.2.1 进程的定义和特征</h3>
+<p>要和线程比较</p>
+<ul>
+<li>程序段、相关的数据段和PCB三部分构成了<strong>进程实体（进程映像）</strong>。</li>
+</ul>
+<p><strong>进程的定义</strong>：</p>
+<ol>
+<li>进程是程序的一次执行</li>
+<li>进程是一个程序及其数据在处理机上顺序执行时所发生的活动</li>
+<li>进程是具有独立功能的程序在一个数据集合上运行的过程，它是系统进行资源分配和调度的一个独立单位。</li>
+</ol>
+<ul>
+<li>在引入了进程实体的概念后，我们可以把传统OS中的进程定义为：“进程是进程实体的运行过程，是系统进行资源分配和调度的一个独立单位。”</li>
+</ul>
+<p><strong>进程的特征</strong>：</p>
+<p>进程和程序是2个截然不同的概念，除了进程具有程序所没有的PCB外，还具有下面特征：</p>
+<ol>
+<li>动态性（最基本的特征）
+<ul>
+<li>进程的<strong>实质</strong>是进程实体的执行过程</li>
+<li>动态性还表现在：“它由创建而生，由调度而执行，由撤销而消亡。” =&gt; 所以进程实体有一定的生命期，而程序只是一组有序指令的集合，并存放在某种介质上，其本身不具有活动哦的含义，因而是静态的。</li>
+</ul>
+</li>
+<li>并发性
+<ul>
+<li>是指多个进程实体同时存在于内存中，且能在<strong>一段时间内</strong>同时运行。 =&gt; 也是引入进程的目的</li>
+<li>并发性是进程的另一重要特征，也是OS的重要特征</li>
+<li>程序（没有建立PCB）是不能参与并发执行的</li>
+</ul>
+</li>
+<li>独立性
+<ul>
+<li>进程实体是一个能独立运行、独立获得资源和独立接受调度的基本单位</li>
+<li>凡未建立PCB的程序都不能作为一个独立的单位参与运行</li>
+</ul>
+</li>
+<li>异步性
+<ul>
+<li>异步性导致传统程序若参与并发执行，会产生其结果的不可在现行。=&gt; 所以引入进程的概念，并配置进程同步机制。</li>
+</ul>
+</li>
+</ol>
+<h3 id="2-2-2-3种状态">2.2.2 3种状态</h3>
+<p>什么是就绪、执行、阻塞状态</p>
+<p>三者如何转换：为什么+何时</p>
+<p>第十周第二节课<code>00:00</code></p>
+<p>注意平板上的笔记。</p>
+<img src="/2023/11/07/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%EF%BC%881%EF%BC%89%E5%A4%8D%E4%B9%A0/image-20231106192404344.png" srcset="/img/loading.gif" lazyload class="" title="image-20231106192404344">
+<p>状态转换<strong>最常见</strong>的原因是：时间片结束（也有其他原因）</p>
+<p>一个程序的时间片结束后不会唤醒其他进程（不像信号量，信号量会用PV操作唤醒其他进程）</p>
+<p>程序唤醒后要就绪才能执行，唤醒后并不能马上执行。</p>
+<img src="/2023/11/07/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%EF%BC%881%EF%BC%89%E5%A4%8D%E4%B9%A0/image-20231106193451123.png" srcset="/img/loading.gif" lazyload class="" title="image-20231106193451123">
+<p>创建状态、终止状态和挂起操作老师好像没提到？还是看看书吧。</p>
+<h3 id="2-3-3和2-3-4-影响进程终止、阻塞和唤醒的事件">2.3.3和2.3.4 影响进程终止、阻塞和唤醒的事件</h3>
+<img src="/2023/11/07/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%EF%BC%881%EF%BC%89%E5%A4%8D%E4%B9%A0/image-20231106194830840.png" srcset="/img/loading.gif" lazyload class="" title="image-20231106194830840">
+<img src="/2023/11/07/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%EF%BC%881%EF%BC%89%E5%A4%8D%E4%B9%A0/image-20231106194923746.png" srcset="/img/loading.gif" lazyload class="" title="image-20231106194923746">
+<h3 id="2-3-2与进程创建相关的调用及其含义-（实验课上讲过）">2.3.2与进程创建相关的调用及其含义 （实验课上讲过）</h3>
+<p>wait()</p>
+<p>sleep()</p>
+<h3 id="2-4-进程同步">2.4 进程同步</h3>
+<p>遵守的4个规则</p>
+<img src="/2023/11/07/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%EF%BC%881%EF%BC%89%E5%A4%8D%E4%B9%A0/image-20231106195457474.png" srcset="/img/loading.gif" lazyload class="" title="image-20231106195457474">
+<h3 id="2-4-1-临界区的概念">2.4.1 临界区的概念</h3>
+<img src="/2023/11/07/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%EF%BC%881%EF%BC%89%E5%A4%8D%E4%B9%A0/image-20231106195436959.png" srcset="/img/loading.gif" lazyload class="" title="image-20231106195436959">
+<h3 id="2-4-3-信号量机制">2.4.3 信号量机制</h3>
+<p>同步主要看信号量机制</p>
+<p>原子操作：wait(),signal()（也被成为PV操作）</p>
+<p>信号量机制是低级的通信原理</p>
+<img src="/2023/11/07/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%EF%BC%881%EF%BC%89%E5%A4%8D%E4%B9%A0/image-20231106200834120.png" srcset="/img/loading.gif" lazyload class="" title="image-20231106200834120">
+<img src="/2023/11/07/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%EF%BC%881%EF%BC%89%E5%A4%8D%E4%B9%A0/image-20231106201022269.png" srcset="/img/loading.gif" lazyload class="" title="image-20231106201022269">
+<img src="/2023/11/07/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%EF%BC%881%EF%BC%89%E5%A4%8D%E4%B9%A0/image-20231106201034405.png" srcset="/img/loading.gif" lazyload class="" title="image-20231106201034405">
+<img src="/2023/11/07/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%EF%BC%881%EF%BC%89%E5%A4%8D%E4%B9%A0/image-20231106201044489.png" srcset="/img/loading.gif" lazyload class="" title="image-20231106201044489">
+<p>AND型信号量了解即可。</p>
+<img src="/2023/11/07/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%EF%BC%881%EF%BC%89%E5%A4%8D%E4%B9%A0/image-20231106202152853.png" srcset="/img/loading.gif" lazyload class="" title="image-20231106202152853">
+<h3 id="2-5-1-生产者—消费者问题">2.5.1 生产者—消费者问题</h3>
+<h3 id="2-6-管道">2.6 管道</h3>
+<p>管道是一种重要的进程通信方式，是一种特殊类型的文件。</p>
+<p>管道是指：用于连接一个读进程和一个写进程以实现它们之间通信的一个共享文件，又名pipe文件。</p>
+<p>管道机制必须提供三方面的协调能力：①互斥；②同步；③确定对方存在。</p>
+<h3 id="2-6-2-信箱">2.6.2 信箱</h3>
+<p>信箱是一种间接的通信方式。</p>
+<h3 id="2-7-线程">2.7 线程</h3>
+<p>课本P82-83：线程和进程的比较</p>
+<p>记录点<code>[24:55]</code></p>
+<img src="/2023/11/07/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%EF%BC%881%EF%BC%89%E5%A4%8D%E4%B9%A0/image-20231106203111715.png" srcset="/img/loading.gif" lazyload class="" title="image-20231106203111715">
+<img src="/2023/11/07/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%EF%BC%881%EF%BC%89%E5%A4%8D%E4%B9%A0/image-20231106203121733.png" srcset="/img/loading.gif" lazyload class="" title="image-20231106203121733">
+<img src="/2023/11/07/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%EF%BC%881%EF%BC%89%E5%A4%8D%E4%B9%A0/image-20231106203131567.png" srcset="/img/loading.gif" lazyload class="" title="image-20231106203131567">
+<h3 id="2-8-线程的实现">2.8 线程的实现</h3>
+<p>只看前两种，并了解它们的区别，比较：调度方面、并发性、拥有的资源、独立性、系统开销。</p>
+<img src="/2023/11/07/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%EF%BC%881%EF%BC%89%E5%A4%8D%E4%B9%A0/image-20231106203334832.png" srcset="/img/loading.gif" lazyload class="" title="image-20231106203334832">
+<img src="/2023/11/07/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%EF%BC%881%EF%BC%89%E5%A4%8D%E4%B9%A0/image-20231106203347720.png" srcset="/img/loading.gif" lazyload class="" title="image-20231106203347720">
+<h1>第三章 处理机调度与死锁</h1>
+<h3 id="3-1-2-周转时间的概念和计算">3.1.2  周转时间的概念和计算</h3>
+<h3 id="3-2-3-短作业优先调度算法">3.2.3 短作业优先调度算法</h3>
+<h3 id="3-2-4-高响应比优先调度算法">3.2 4 高响应比优先调度算法</h3>
+<p><code>40:00</code>在讲例题</p>
+<h3 id="3-3-2-轮转调度算法">3.3.2 轮转调度算法</h3>
+<h3 id="3-3-3-优先级调度算法">3.3.3 优先级调度算法</h3>
+<h3 id="3-3-5-多级反馈队列调度算法">3.3.5 多级反馈队列调度算法</h3>
+<p>把机制记下来，把优缺点分析清楚</p>
+<p>处理机并不是任何时候都在运行状态。</p>
+<h3 id="3-5-死锁">3.5 死锁</h3>
+<p>主要原因归纳为①竞争资源；②进程推进顺序不当。</p>
+<h3 id="3-5-3死锁的定义、必要条件和处理方法">3.5.3死锁的定义、必要条件和处理方法</h3>
+<h3 id="3-6-预防死锁">3.6 预防死锁</h3>
+<p>对资源类型排序=&gt;破坏“循环等待”条件。</p>
+<h3 id="3-7-避免死锁">3.7 避免死锁</h3>
+<p>银行家算法的例子</p>
+<h3 id="3-8-2-死锁的解除">3.8.2 死锁的解除</h3>
+<h1>第九章 操作系统接口</h1>
+<h3 id="9-4-系统调用">9.4 系统调用</h3>
+<p>系统调用基于中断机制</p>
+<p>判断、选择、填空、简答、综合。</p>
+<p>综合类：银行家算法，信号量，作业调度，短作业优先，高响应比优先，以及给一个程序，让你判断程序的意思（实验课内容）。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E8%80%83%E8%AF%95%E5%91%A8/" class="category-chain-item">考试周</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E8%80%83%E8%AF%95%E5%91%A8%E5%A4%8D%E4%B9%A0/">#考试周复习</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>操作系统（1）复习</div>
+      <div>http://example.com/2023/11/07/操作系统（1）复习/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>微分方程</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年11月7日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/06/15/%E6%A8%A1%E6%9D%BF/" title="模板">
+                        <span class="hidden-mobile">模板</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#comments', function() {
+      var light = 'github-light';
+      var dark = 'github-dark';
+      var schema = document.documentElement.getAttribute('data-user-color-scheme');
+      if (schema === 'dark') {
+        schema = dark;
+      } else {
+        schema = light;
+      }
+      window.UtterancesThemeLight = light;
+      window.UtterancesThemeDark = dark;
+      var s = document.createElement('script');
+      s.setAttribute('src', 'https://utteranc.es/client.js');
+      s.setAttribute('repo', 'XuMoheng/HEXO-FLUID-commit');
+      s.setAttribute('issue-term', 'title');
+      
+      s.setAttribute('label', 'hexo');
+      
+      s.setAttribute('theme', schema);
+      s.setAttribute('crossorigin', 'anonymous');
+      document.getElementById('comments').appendChild(s);
+    })
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('mermaid' in window) {
+        mermaid.init();
+      }
+    });
+  });
+</script>
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <span> | Life blooms like a flower. 微分方程</span> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
+<!--以下为新增内容-->
+<!--动态线条背景-->
+<script type="text/javascript"
+color="0,139,139" opacity='0.9' zIndex="-2" count="200" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
+</script>
+<!--单击显示文字-->
+<script type="text/javascript" src="/js/click_show_text.js"></script>
+<!--浏览器搞笑标题-->
+<script type="text/javascript" src="\js\FunnyTitle.js"></script>
